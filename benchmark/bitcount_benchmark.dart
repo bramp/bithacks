@@ -4,9 +4,9 @@ import 'package:benchmark_harness/benchmark_harness.dart';
 
 import 'print_per_second.dart';
 
-/// Run with `dart run benchmarks/bitcount_benchmark.dart`
+/// Run with `dart run benchmark/bitcount_benchmark.dart`
 ///
-/// On my Mac Book M2:
+/// On my MacBook Pro 2023 M2 Pro:
 /// BitCountBenchmark      44203889.03 per second.
 ///
 class BitCountBenchmark extends BenchmarkBase {
