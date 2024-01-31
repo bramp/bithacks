@@ -2,7 +2,7 @@
 
 by Andrew Brampton ([bramp.net](https://bramp.net))
 
-A collection of bit twiddling hacks.
+Collection of bit twiddling hacks. Think _popcnt64 or _pdep_u64.
 
 [GitHub](https://github.com/bramp/bithacks) | [Package](https://pub.dev/packages/bithacks) | [API Docs](https://pub.dev/documentation/bithacks/latest/)
 

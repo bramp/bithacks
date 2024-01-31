@@ -1,7 +1,12 @@
 name: bithacks
-description: A starting point for Dart libraries or applications.
+description: Collection of bit twiddling hacks. Think _popcnt64 or _pdep_u64.
 version: 1.0.0
 repository: https://github.com/bramp/bithacks
+documentation: https://pub.dev/documentation/bithacks/latest/
+
+topics:
+  - bit
+  - performance
 
 environment:
   sdk: ^3.2.6
