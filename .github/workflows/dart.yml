@@ -1,0 +1,30 @@
+# To test this workflow, you can use the following command:
+# act -j build -s GITHUB_TOKEN="$(gh auth token)" --container-architecture linux/amd64
+name: Dart
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      # Uncomment this step to verify the use of 'dart format' on each commit.
+      # - name: Verify formatting
+      #   run: dart format --output=none --set-exit-if-changed .
+
+      # Consider passing '--fatal-infos' for slightly stricter analysis.
+      # - name: Analyze project source
+      #   run: dart analyze
+
+      - name: Run tests (vm)
+        run: dart test
+
+      #- name: Run tests (chrome)
+      #  run: dart test -p chrome
