@@ -1,7 +1,8 @@
 import 'dart:math';
 
 import 'package:bithacks/bithacks.dart';
-import 'vm/math.dart';
+import 'package:bithacks/src/vm/math.dart'
+    if (dart.library.js) 'package:bithacks/src/js/math.dart';
 import 'package:test/test.dart';
 
 void main() {
