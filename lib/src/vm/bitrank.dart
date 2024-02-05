@@ -1,5 +1,3 @@
-import 'package:bithacks/bithacks.dart';
-
 extension BitRankExt on int {
   /// {@template bithacks.bitRank}
   /// Finds the index of [rank]th bit set counting from the right,
