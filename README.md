@@ -31,6 +31,24 @@ Works on both Dart VM and dart2js.
   0x43.bitRank(3); // returns -1  (not found)
 ```
 
+## Development
+
+To run the tests:
+
+```bash
+dart test
+dart test -p chrome
+```
+
+To publish:
+
+```bash
+dart analyze
+
+# Bump the version in pubspec.yaml
+dart pub lish
+```
+
 ## Additional information
 
 These algorithms were inspired by [Bit Twiddling Hacks](https://graphics.stanford.edu/~seander/bithacks.html)
