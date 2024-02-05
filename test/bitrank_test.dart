@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:bithacks/bithacks.dart';
-import 'math.dart';
+import 'vm/math.dart';
 import 'package:test/test.dart';
 
 void main() {
