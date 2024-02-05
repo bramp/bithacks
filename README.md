@@ -46,6 +46,8 @@ To publish:
 dart analyze
 
 # Bump the version in pubspec.yaml
+# Update the CHANGELOG.md
+
 dart pub lish
 ```
 
