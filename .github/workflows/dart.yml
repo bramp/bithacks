@@ -14,6 +14,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+      - uses: dart-lang/setup-dart@v1
 
       # Uncomment this step to verify the use of 'dart format' on each commit.
       # - name: Verify formatting
@@ -28,3 +29,6 @@ jobs:
 
       - name: Run tests (chrome)
         run: dart test -p chrome
+
+      - run: dart format --output=none --set-exit-if-changed .
+      - run: dart analyze
