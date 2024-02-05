@@ -1,12 +1,13 @@
 import 'dart:math';
 
 import 'package:bithacks/bithacks.dart';
-import 'package:bithacks/src/vm/math.dart'
-    if (dart.library.js) 'package:bithacks/src/js/math.dart';
+import 'package:bithacks/src/math.dart';
 import 'package:test/test.dart';
 
+import 'util.dart';
+
 void main() {
-  test('bitCount should work', () {
+  test('bitCount should work should work with valid cases', () {
     expect(0x00.bitCount(), 0, reason: "0x00.bitCount()");
     expect(0x01.bitCount(), 1, reason: "0x01.bitCount()");
     expect(0x02.bitCount(), 1, reason: "0x02.bitCount()");
@@ -29,8 +30,7 @@ void main() {
         reason: "0x12345678901234.bitCount()");
 
     // Max safe int.
-    expect(0x1FFFFFFFFFFFFF.bitCount(), 53,
-        reason: "0x1FFFFFFFFFFFFF.bitCount()");
+    expect(maxSafeInt.bitCount(), 53, reason: "0x1FFFFFFFFFFFFF.bitCount()");
   });
 
   test('bitCount should throw for negative numbers', () {
@@ -41,6 +41,7 @@ void main() {
   test('bitCount >= 2^53 should work', () {
     expect(maxSafeInt.bitCount(), 53);
     expect((maxSafeInt + 1).bitCount(), 1);
+
     expect(maxInt.bitCount(), 63);
   }, testOn: '!js');
 
@@ -49,26 +50,14 @@ void main() {
         reason: "(2 ^ 53).bitCount()");
   }, testOn: 'js');
 
-  test('bitCount should work when compared to simple algorithm', () {
-    // Test a bunch of random numbers against a slower simple algorithm.
-    // Just as a extra sanity check.
+  test('bitCount should work with random input', () {
+    // Test a bunch of random numbers. Just as a extra sanity check.
     final rnd = Random();
-    for (int i = 0; i < 100000; i++) {
-      int v = rnd.nextInt(4294967296); // Largest number it supports
 
-      // TODO make a 64 bit number
-      expect(v.bitCount(), bitCountBK(v), reason: "$v.bitCount()");
+    for (int i = 0; i < 100000; i++) {
+      final (v, bits) = randomBits(rnd);
+
+      expect(v.bitCount(), bits.length, reason: "$v.bitCount()");
     }
   });
-}
-
-// A simple bitcount algorithm by Brian Kernighan.
-// https://graphics.stanford.edu/~seander/bithacks.html#CountBitsSetKernighan
-int bitCountBK(int v) {
-  int c = 0;
-  while (v > 0) {
-    v &= v - 1; // clear the least significant bit set
-    c++;
-  }
-  return c;
 }

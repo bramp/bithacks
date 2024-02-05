@@ -1,6 +1,6 @@
-// TODO Test up to 2^32, to see if it actually works, otherwise rename 2^31.
-import 'math.dart';
+import '../math.dart';
 
+// TODO Test up to 2^32, to see if it actually works, otherwise rename 2^31.
 int bitCount32(int v) {
   // TODO
   // https://stackoverflow.com/questions/43122082/efficiently-count-the-number-of-bits-in-an-integer-in-javascript
@@ -19,7 +19,7 @@ extension BitCountInt on int {
     int v = this;
     if (v < 0 || v > maxSafeInt) {
       throw ArgumentError.value(
-          v, 'value', 'must be a positive integer <= 2^53 - 1');
+          v, 'this', 'must be a positive integer less than 2^53 - 1');
     }
 
     // dart2js doesn't support bit operations above 2^32. So the native

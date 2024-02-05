@@ -16,7 +16,7 @@ extension BitCountInt on int {
   int bitCount() {
     int v = this;
     if (v < 0 /* || v > 0x7FFFFFFFFFFFFFFF */) {
-      throw ArgumentError.value(v, 'value', 'must be a positive integer');
+      throw ArgumentError.value(v, 'this', 'must be a positive integer');
     }
 
     // Generalised 128-bit algorithm from

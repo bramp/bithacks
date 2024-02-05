@@ -1,3 +1,5 @@
+import 'package:bithacks/bithacks.dart';
+
 extension BitRankExt on int {
   /// {@template bithacks.bitRank}
   /// Finds the index of [rank]th bit set counting from the right,
@@ -23,7 +25,7 @@ extension BitRankExt on int {
   int bitRank(int rank) {
     final v = this;
     if (v < 0 /* || v > 0x7FFFFFFFFFFFFFFF */) {
-      throw ArgumentError.value(v, 'value', 'must be a positive integer');
+      throw ArgumentError.value(v, 'this', 'must be a positive integer');
     }
     if (rank < 0 || rank > 63) {
       throw ArgumentError.value(rank, 'rank', 'must be in range [0-63]');
@@ -51,8 +53,9 @@ extension BitRankExt on int {
     final c = (b & 0x0F0F0F0F0F0F0F0F) + ((b >> 4) & 0x0F0F0F0F0F0F0F0F);
     final d = (c & 0x00FF00FF00FF00FF) + ((c >> 8) & 0x00FF00FF00FF00FF);
     final e = (d & 0x0000FFFF0000FFFF) + ((d >> 16) & 0x0000FFFF0000FFFF);
+    final f = (e & 0x00000000FFFFFFFF) + ((e >> 32) & 0x00000000FFFFFFFF);
 
-    if (rank++ >= e) {
+    if (rank++ >= f) {
       return -1;
     }
 
@@ -60,7 +63,12 @@ extension BitRankExt on int {
 
     /// This is the branchless version of the code. The branched version (which
     /// isn't used, and is slower on my machine) is below. See [_bitRankBranches].
-    int temp = e & 0xffff;
+    ///
+    int temp = f & 0xff;
+    result += ((temp - rank) & 256) >> 2;
+    rank -= temp & ((temp - rank) >> 8);
+
+    temp = (e >> result) & 0xff;
     result += ((temp - rank) & 256) >> 3;
     rank -= temp & ((temp - rank) >> 8);
 
@@ -86,24 +94,31 @@ extension BitRankExt on int {
     return result;
   }
 
-/*
+  // ignore: unused_element
   int _bitRankBranches(int rank) {
     final v = this;
+    if (v < 0 /* || v > 0x7FFFFFFFFFFFFFFF */) {
+      throw ArgumentError.value(v, 'this', 'must be a positive integer');
+    }
+    if (rank < 0 || rank > 63) {
+      throw ArgumentError.value(rank, 'rank', 'must be in range [0-63]');
+    }
+
     final a = (v & 0x5555555555555555) + ((v >> 1) & 0x5555555555555555);
     final b = (a & 0x3333333333333333) + ((a >> 2) & 0x3333333333333333);
     final c = (b & 0x0F0F0F0F0F0F0F0F) + ((b >> 4) & 0x0F0F0F0F0F0F0F0F);
     final d = (c & 0x00FF00FF00FF00FF) + ((c >> 8) & 0x00FF00FF00FF00FF);
     final e = (d & 0x0000FFFF0000FFFF) + ((d >> 16) & 0x0000FFFF0000FFFF);
+    final f = (e & 0x00000000FFFFFFFF) + ((e >> 32) & 0x00000000FFFFFFFF);
 
     int result = 0;
 
-    if (rank++ >= e) {
+    if (rank++ >= f) {
       return -1;
     }
 
     int temp;
-
-    temp = e & 0xffff;
+    temp = (e >> result) & 0xff;
     if (rank > temp) {
       rank -= temp;
       result += 32;
@@ -138,5 +153,4 @@ extension BitRankExt on int {
 
     return result;
   }
-*/
 }

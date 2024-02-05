@@ -26,5 +26,5 @@ jobs:
       - name: Run tests (vm)
         run: dart test
 
-      #- name: Run tests (chrome)
-      #  run: dart test -p chrome
+      - name: Run tests (chrome)
+        run: dart test -p chrome
