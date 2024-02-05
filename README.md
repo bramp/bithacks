@@ -2,7 +2,9 @@
 
 by Andrew Brampton ([bramp.net](https://bramp.net))
 
-Collection of bit twiddling hacks. Think _popcnt64 or _pdep_u64.
+Collection of bit twiddling hacks. Think
+[popcount](https://en.cppreference.com/w/cpp/numeric/popcount) or _pdep_u64.
+Works on both Dart VM and dart2js.
 
 [GitHub](https://github.com/bramp/bithacks) | [Package](https://pub.dev/packages/bithacks) | [API Docs](https://pub.dev/documentation/bithacks/latest/)
 
