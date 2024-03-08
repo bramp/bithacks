@@ -4,6 +4,9 @@ version: 1.1.0
 repository: https://github.com/bramp/bithacks
 documentation: https://pub.dev/documentation/bithacks/latest/
 
+funding:
+  - https://www.buymeacoffee.com/bramp
+
 topics:
   - bit
   - performance
@@ -16,6 +19,6 @@ environment:
 
 dev_dependencies:
   benchmark_harness: ^2.2.2
-  format: ^1.4.0
-  lints: ^2.1.0
+  format: ^1.5.1
+  lints: ^3.0.0
   test: ^1.24.0
