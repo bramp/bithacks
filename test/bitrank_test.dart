@@ -10,7 +10,7 @@ import 'util.dart';
 // seem worth it. Either way I'm not sure I like how to the test cases look.
 void expectBitRank(int v, int rank, dynamic matcher) {
   expect(v.bitRank(rank), matcher,
-      reason: "0x${v.toRadixString(16)}.bitRank($rank)");
+      reason: '0x${v.toRadixString(16)}.bitRank($rank)',);
 }
 
 void main() {
@@ -74,37 +74,37 @@ void main() {
     expectBitRank(maxInt, 0, 0); // 2^63 - 1
     expectBitRank(maxInt, 62, 62);
     expectBitRank(maxInt, 63, -1);
-  }, testOn: '!js');
+  }, testOn: '!js',);
 
   test('bitRank should throw for negative numbers', () {
     expect(() => (-1).bitRank(0), throwsArgumentError,
-        reason: "(-1).bitRank(0)");
+        reason: '(-1).bitRank(0)',);
 
-    expect(() => 10.bitRank(-1), throwsArgumentError, reason: "10.bitRank(-1)");
+    expect(() => 10.bitRank(-1), throwsArgumentError, reason: '10.bitRank(-1)');
   });
 
   test('bitRank should throw for large ranks', () {
-    expect(() => (1).bitRank(64), throwsArgumentError,
-        reason: "(1).bitRank(64)");
-  }, testOn: '!js');
+    expect(() => 1.bitRank(64), throwsArgumentError,
+        reason: '(1).bitRank(64)',);
+  }, testOn: '!js',);
 
   test('bitRank should throw for large ranks', () {
-    expect(() => (1).bitRank(54), throwsArgumentError,
-        reason: "(1).bitRank(54)");
-  }, testOn: 'js');
+    expect(() => 1.bitRank(54), throwsArgumentError,
+        reason: '(1).bitRank(54)',);
+  }, testOn: 'js',);
 
   test('bitRank should work with random input', () {
     // Test a bunch of random numbers. Just as a extra sanity check.
     final rnd = Random();
 
-    for (int i = 0; i < 100000; i++) {
+    for (var i = 0; i < 100000; i++) {
       final (v, bits) = randomBits(rnd);
 
-      for (int i = 0; i < bits.length; i++) {
-        expect(v.bitRank(i), bits[i], reason: "$v.bitRank($i)");
+      for (var i = 0; i < bits.length; i++) {
+        expect(v.bitRank(i), bits[i], reason: '$v.bitRank($i)');
       }
 
-      expect(v.bitRank(bits.length), -1, reason: "$v.bitRank($bits.length)");
+      expect(v.bitRank(bits.length), -1, reason: '$v.bitRank($bits.length)');
     }
   });
 }

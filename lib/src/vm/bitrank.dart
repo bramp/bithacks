@@ -1,9 +1,12 @@
+// Large integers are fine on the VM, so we ignore avoid_js_rounded_ints.
+// ignore_for_file: avoid_js_rounded_ints
+/// Extension on [int] to provide bit rank functionality on the VM.
 extension BitRankExt on int {
   /// {@template bithacks.bitRank}
-  /// Finds the index of [rank]th bit set counting from the right,
+  /// Finds the index of [rankValue]th bit set counting from the right,
   /// 0-indexed, returning -1 if no such bit exists.
   ///
-  /// [rank] The rank of the bit being looked for.
+  /// [rankValue] The rank of the bit being looked for.
   ///
   ///   7 6 5 4 3 2 1 0 (index)
   ///   0 1 0 0 0 0 1 1 (value 0x43 with 3 bits set)
@@ -14,14 +17,15 @@ extension BitRankExt on int {
   ///   0x43.bitRank(2) = 6 (found at index 6)
   ///   0x43.bitRank(3) = -1 (not found)
   ///
-  /// Only positive ints are supported up to 2 ^63 - 1 on native dart and 2 ^ 53
+  /// Only positive ints are supported up to 2^63 - 1 on native dart and 2^53
   /// - 1 with dart2js. Values outside this range will throw a ArgumentError.
   ///
   /// Modified from https://stackoverflow.com/q/7669057/88646
   /// and https://graphics.stanford.edu/~seander/bithacks.html##SelectPosFromMSBRank
   /// {@endtemplate}
-  int bitRank(int rank) {
+  int bitRank(int rankValue) {
     final v = this;
+    var rank = rankValue;
     if (v < 0 /* || v > 0x7FFFFFFFFFFFFFFF */) {
       throw ArgumentError.value(v, 'this', 'must be a positive integer');
     }
@@ -30,7 +34,8 @@ extension BitRankExt on int {
     }
 
     // If dart ever supports _pdep_u64 and _tzcnt_u64, then we can switch this
-    // algorithm out for a faster one. e.g: https://stackoverflow.com/a/27453505/88646
+    // algorithm out for a faster one. e.g:
+    // https://stackoverflow.com/a/27453505/88646
     //
     // inline unsigned nthset(uint64_t x, unsigned n) {
     //    return _tzcnt_u64(_pdep_u64(1ULL << n, x));
@@ -57,12 +62,13 @@ extension BitRankExt on int {
       return -1;
     }
 
-    int result = 0;
+    var result = 0;
 
     /// This is the branchless version of the code. The branched version (which
-    /// isn't used, and is slower on my machine) is below. See [_bitRankBranches].
+    /// isn't used, and is slower on my machine) is below.
+    /// See [_bitRankBranches].
     ///
-    int temp = f & 0xff;
+    var temp = f & 0xff;
     result += ((temp - rank) & 256) >> 2;
     rank -= temp & ((temp - rank) >> 8);
 
@@ -87,14 +93,14 @@ extension BitRankExt on int {
     rank -= temp & ((temp - rank) >> 8);
 
     temp = (v >> result) & 0x01;
-    result += ((temp - rank) & 256) >> 8;
-
-    return result;
+    return result + (((temp - rank) & 256) >> 8);
   }
 
+  /// Internal method for bit rank using branches (unused).
   // ignore: unused_element
-  int _bitRankBranches(int rank) {
+  int _bitRankBranches(int rankValue) {
     final v = this;
+    var rank = rankValue;
     if (v < 0 /* || v > 0x7FFFFFFFFFFFFFFF */) {
       throw ArgumentError.value(v, 'this', 'must be a positive integer');
     }
@@ -109,7 +115,7 @@ extension BitRankExt on int {
     final e = (d & 0x0000FFFF0000FFFF) + ((d >> 16) & 0x0000FFFF0000FFFF);
     final f = (e & 0x00000000FFFFFFFF) + ((e >> 32) & 0x00000000FFFFFFFF);
 
-    int result = 0;
+    var result = 0;
 
     if (rank++ >= f) {
       return -1;
@@ -147,7 +153,9 @@ extension BitRankExt on int {
     }
 
     temp = (this >> result) & 0x01;
-    if (rank > temp) result += 1;
+    if (rank > temp) {
+      result += 1;
+    }
 
     return result;
   }

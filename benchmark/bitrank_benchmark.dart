@@ -1,6 +1,7 @@
 import 'dart:math';
-import 'package:bithacks/bithacks.dart';
+
 import 'package:benchmark_harness/benchmark_harness.dart';
+import 'package:bithacks/bithacks.dart';
 
 import 'print_per_second.dart';
 
@@ -16,6 +17,7 @@ class BitRankBenchmark extends BenchmarkBase {
 
   final Random rnd = Random();
 
+  // The method is only for manual benchmarking.
   // ignore: unused_element
   void _runStatic() {
     // Just some random bit tests
@@ -29,8 +31,8 @@ class BitRankBenchmark extends BenchmarkBase {
   // The benchmark code.
   @override
   void run() {
-    int v = rnd.nextInt(1 << 32);
-    int r = rnd.nextInt(32);
+    final v = rnd.nextInt(1 << 32);
+    final r = rnd.nextInt(32);
     v.bitRank(r);
   }
 }

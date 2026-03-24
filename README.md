@@ -43,12 +43,12 @@ dart test -p chrome
 To publish:
 
 ```bash
-dart analyze
-
 # Bump the version in pubspec.yaml
 # Update the CHANGELOG.md
 
-dart pub lish
+git commit -m "chore: bump version to 1.2.0"
+git tag bithacks-v1.2.0
+git push origin main --tags
 ```
 
 ## Additional information

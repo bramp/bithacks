@@ -1,3 +1,6 @@
+// Large integers are fine on the VM, so we ignore avoid_js_rounded_ints.
+// ignore_for_file: avoid_js_rounded_ints
+/// Extension on [int] to provide bit counting functionality on the VM.
 extension BitCountInt on int {
   /// {@template bithacks.bitCount}
   /// Counts the number of bits set to 1 in a integer. Also know as popcount.
@@ -8,13 +11,13 @@ extension BitCountInt on int {
   ///  0x03.bitCount() == 2;
   ///  0x7FFFFFFFFFFFFFFF.bitCount() == 63;
   ///
-  /// Only positive ints are supported up to 2 ^63 - 1 on native dart and 2 ^ 53
+  /// Only positive ints are supported up to 2^63 - 1 on native dart and 2^53
   /// - 1 with dart2js. Values outside this range will throw a ArgumentError.
   ///
   /// Uses a algorithm from https://graphics.stanford.edu/~seander/bithacks.html#CountBitsSetParallel
   /// {@endtemplate}
   int bitCount() {
-    int v = this;
+    var v = this;
     if (v < 0 /* || v > 0x7FFFFFFFFFFFFFFF */) {
       throw ArgumentError.value(v, 'this', 'must be a positive integer');
     }

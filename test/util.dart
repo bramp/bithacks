@@ -13,14 +13,14 @@ final List<int> bits = List.generate(maxIntBits, (i) => i);
   bits.shuffle(rnd);
   final setBits = bits.sublist(0, rnd.nextInt(bits.length + 1));
 
-  int v = 0;
-  for (int i = 0; i < setBits.length; i++) {
+  var v = 0;
+  for (var i = 0; i < setBits.length; i++) {
     v += pow(2, setBits[i])
         as int; // same as `v |= 1 << bits[i]` but safe on JS.
   }
 
   setBits.sort();
 
-  assert(v.bitCount() == setBits.length, "$v.bitCount() != ${setBits.length}");
+  assert(v.bitCount() == setBits.length, '$v.bitCount() != ${setBits.length}');
   return (v, setBits);
 }
