@@ -9,8 +9,11 @@ import 'util.dart';
 // Simple wrapper, to add a reason. We create a real matcher, but it didn't
 // seem worth it. Either way I'm not sure I like how to the test cases look.
 void expectBitRank(int v, int rank, dynamic matcher) {
-  expect(v.bitRank(rank), matcher,
-      reason: '0x${v.toRadixString(16)}.bitRank($rank)',);
+  expect(
+    v.bitRank(rank),
+    matcher,
+    reason: '0x${v.toRadixString(16)}.bitRank($rank)',
+  );
 }
 
 void main() {
@@ -63,35 +66,56 @@ void main() {
     expectBitRank(maxSafeInt, 53, -1);
   });
 
-  test('bitRank >= 2^53 should work', () {
-    // 2 ^ 53 - 1
-    expectBitRank(maxSafeInt, 53, -1);
+  test(
+    'bitRank >= 2^53 should work',
+    () {
+      // 2 ^ 53 - 1
+      expectBitRank(maxSafeInt, 53, -1);
 
-    // 2 ^ 53
-    expectBitRank(0x20000000000000, 0, 53);
+      // 2 ^ 53
+      expectBitRank(0x20000000000000, 0, 53);
 
-    // (2^63 - 1) Works on the largest number
-    expectBitRank(maxInt, 0, 0); // 2^63 - 1
-    expectBitRank(maxInt, 62, 62);
-    expectBitRank(maxInt, 63, -1);
-  }, testOn: '!js',);
+      // (2^63 - 1) Works on the largest number
+      expectBitRank(maxInt, 0, 0); // 2^63 - 1
+      expectBitRank(maxInt, 62, 62);
+      expectBitRank(maxInt, 63, -1);
+    },
+    testOn: '!js',
+  );
 
   test('bitRank should throw for negative numbers', () {
-    expect(() => (-1).bitRank(0), throwsArgumentError,
-        reason: '(-1).bitRank(0)',);
+    expect(
+      () => (-1).bitRank(0),
+      throwsArgumentError,
+      reason: '(-1).bitRank(0)',
+    );
 
     expect(() => 10.bitRank(-1), throwsArgumentError, reason: '10.bitRank(-1)');
   });
 
-  test('bitRank should throw for large ranks', () {
-    expect(() => 1.bitRank(64), throwsArgumentError,
-        reason: '(1).bitRank(64)',);
-  }, testOn: '!js',);
+  test(
+    'bitRank should throw for large ranks',
+    () {
+      expect(
+        () => 1.bitRank(64),
+        throwsArgumentError,
+        reason: '(1).bitRank(64)',
+      );
+    },
+    testOn: '!js',
+  );
 
-  test('bitRank should throw for large ranks', () {
-    expect(() => 1.bitRank(54), throwsArgumentError,
-        reason: '(1).bitRank(54)',);
-  }, testOn: 'js',);
+  test(
+    'bitRank should throw for large ranks',
+    () {
+      expect(
+        () => 1.bitRank(54),
+        throwsArgumentError,
+        reason: '(1).bitRank(54)',
+      );
+    },
+    testOn: 'js',
+  );
 
   test('bitRank should work with random input', () {
     // Test a bunch of random numbers. Just as a extra sanity check.

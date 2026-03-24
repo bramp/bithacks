@@ -24,31 +24,51 @@ void main() {
     expect(0x1234567890.bitCount(), 15, reason: '0x1234567890.bitCount()');
     expect(0x12345678901.bitCount(), 16, reason: '0x12345678901.bitCount()');
     expect(0x123456789012.bitCount(), 17, reason: '0x123456789012.bitCount()');
-    expect(0x1234567890123.bitCount(), 19,
-        reason: '0x1234567890123.bitCount()',);
-    expect(0x12345678901234.bitCount(), 20,
-        reason: '0x12345678901234.bitCount()',);
+    expect(
+      0x1234567890123.bitCount(),
+      19,
+      reason: '0x1234567890123.bitCount()',
+    );
+    expect(
+      0x12345678901234.bitCount(),
+      20,
+      reason: '0x12345678901234.bitCount()',
+    );
 
     // Max safe int.
     expect(maxSafeInt.bitCount(), 53, reason: '0x1FFFFFFFFFFFFF.bitCount()');
   });
 
   test('bitCount should throw for negative numbers', () {
-    expect(() => (-1).bitCount(), throwsArgumentError,
-        reason: '(-1).bitCount()',);
+    expect(
+      () => (-1).bitCount(),
+      throwsArgumentError,
+      reason: '(-1).bitCount()',
+    );
   });
 
-  test('bitCount >= 2^53 should work', () {
-    expect(maxSafeInt.bitCount(), 53);
-    expect((maxSafeInt + 1).bitCount(), 1);
+  test(
+    'bitCount >= 2^53 should work',
+    () {
+      expect(maxSafeInt.bitCount(), 53);
+      expect((maxSafeInt + 1).bitCount(), 1);
 
-    expect(maxInt.bitCount(), 63);
-  }, testOn: '!js',);
+      expect(maxInt.bitCount(), 63);
+    },
+    testOn: '!js',
+  );
 
-  test('bitCount >= 2^53 should throw throwsArgumentError on js', () {
-    expect(() => (pow(2, 53) as int).bitCount(), throwsArgumentError,
-        reason: '(2 ^ 53).bitCount()',);
-  }, testOn: 'js',);
+  test(
+    'bitCount >= 2^53 should throw throwsArgumentError on js',
+    () {
+      expect(
+        () => (pow(2, 53) as int).bitCount(),
+        throwsArgumentError,
+        reason: '(2 ^ 53).bitCount()',
+      );
+    },
+    testOn: 'js',
+  );
 
   test('bitCount should work with random input', () {
     // Test a bunch of random numbers. Just as a extra sanity check.

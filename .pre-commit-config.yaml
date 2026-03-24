@@ -1,0 +1,31 @@
+repos:
+-   repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+    -   id: check-yaml
+        args: [--allow-multiple-documents]
+    -   id: end-of-file-fixer
+    -   id: trailing-whitespace
+-   repo: local
+    hooks:
+    -   id: dart-format
+        name: Dart Format
+        entry: make format
+        language: system
+        types: [dart]
+        pass_filenames: false
+
+    -   id: dart-analyze
+        name: Dart Analyze
+        entry: make analyze
+        language: system
+        types: [dart]
+        pass_filenames: false
+
+    -   id: dart-test
+        name: Dart Test
+        entry: make test
+        language: system
+        types: [dart]
+        pass_filenames: false
+        always_run: false
